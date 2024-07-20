@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::fallback(fn() => throw new JsonException('Invalid Route!', Response::HTTP_NOT_FOUND));

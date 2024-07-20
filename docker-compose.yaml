@@ -1,5 +1,6 @@
 services:
   php-fpm:
+    user: "${UID:-1000}:${GID:-1000}"
     build:
       context: ./docker-compose/php
       dockerfile: Dockerfile
