@@ -23,14 +23,7 @@ class DestinationController extends Controller
     {
         $inputData = $request->validated();
         $destinations = $this->service->getDestinationsWithinRadius($inputData['name'], $inputData['radius']);
-
-        if ($destinations->isEmpty()) {
-            throw new JsonException(
-                'Destination not found or no destinations within radius',
-                Response::HTTP_NOT_FOUND
-            );
-        }
-
+        
         return FindDestinationInRadiusResourceCollection::collection($destinations);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Entities\DestinationEntity;
 use App\Repositories\DestinationRepositoryInterface;
 use Illuminate\Support\Collection;
+use JsonException;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DestinationService
 {
@@ -14,6 +16,9 @@ final readonly class DestinationService
     ) {
     }
 
+    /**
+     * @throws JsonException
+     */
     public function getDestinationsWithinRadius(string $destinationName, int $findInRadius): Collection
     {
         $destinations = $this->destinationRepository->getDestinations();
@@ -23,7 +28,10 @@ final readonly class DestinationService
         );
 
         if (!$fromCity) {
-            return collect();
+            throw new JsonException(
+                "The $destinationName destination not found",
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $fromCityLat = deg2rad($fromCity->getLat());

@@ -15,5 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        if (!config('app.debug')) {
+            $exceptions->render(function (Exception $e) {
+                if ($e instanceof JsonException) {
+                    return response()->json(['message' => $e->getMessage()], $e->getCode());
+                }
+            });
+        }
     })->create();
