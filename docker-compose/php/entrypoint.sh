@@ -6,7 +6,7 @@ cd /var/www
 
 composer install
 
-if [ ! -e "./app/database/database.sqlite" ]; then
+if [ ! -e "./database/database.sqlite" ]; then
     touch database/database.sqlite
 fi
 
